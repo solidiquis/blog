@@ -240,7 +240,6 @@ end
 Now putting it all together to use practically:
 ```ruby
 if __FILE__ == $0
-  puts ENV["PORT"]
   server = TCPServer.new 8080
   pool = ThreadPool.new ThreadPool::DEFAULT_SIZE
   
