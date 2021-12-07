@@ -87,8 +87,8 @@ There we have it, we have just achieved concurrency with Ruby. To summarize what
 1. Our server blocks on `accept`.
 2. Client makes a connection.
 3. We spin up a new operating system thread and offload the handling of the connection to said thread.
-4. The main thread to the loop, waiting for a new client connection.
-5. When a thread is ready to write to the client, it acquires the GVL, writes, and terminates.
+4. The main thread returns to the loop, waiting for a new client connection.
+5. When a thread is ready to write to the client, it acquires the GVL, writes to the connection, and terminates.
 
 So, even though a GVL prevents multiple threads from getting CPU time in parallel, **it does not prevent us from having multiple threads wait in parallel**, allowing our program to continue doing other work while some threads are waiting on IO. What happens if I want to send 20 parallel requests?
 ```bash
