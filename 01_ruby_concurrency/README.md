@@ -1,7 +1,8 @@
 # Concurrency in Ruby
-### Building a simple multithreaded TCP server
 ---
 There is a surprising number of people (seasoned Rubyists included), who are unclear on the subject of concurrency in the official Ruby implementation which runs on the *Yet another Ruby Virtual Machine*, or YARV for brevity. You often hear folks invoking the Global Interpreter Lock (GIL)—though it's more correctly referred to as the Global VM Lock (GVL)—when discussing threading and concurrency as it relates to Ruby, and how it prevents programmers from leveraging those aforementioned techniques. This is far from the truth, so the purpose of this entry is to help clear up some misunderstandings about Ruby and make clear that Ruby is a concurrent friendly language, notwithstanding the GVL.
+
+We'll start by discussing the GVL—what it is and what it isn't—then demonstrate some Ruby concurrency by first building a simple single-threaded TCP echo server, and iterating upon it to make it multithreaded. So without further adieu...
 
 ## What is the GVL?
 Ruby was developed well before multicore processors and threading became mainstream; but when they became inevitable, Ruby, a language full of mutable references, needed some way to minimize the likelihood of data races or even memory leaks which might be caused by multiple simultaneously running threads accessing shared memory. The simplest approach to reducing the chances of these things happening was to implement some sort of mutex around Ruby's VM, requiring any thread that needs CPU time to acquire the lock before its Ruby code could be interpreted. This is the Global VM Lock.
